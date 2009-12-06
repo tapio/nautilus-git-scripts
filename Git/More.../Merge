@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Distributed under the terms of GNU GPL version 2
+#
+# http://marius.scurtescu.com/?p=102
+# http://gnomefiles.org/app.php?soft_id=1059
+
+LOGFILE=`mktemp -t git_merge.XXXXXX`
+ICONPATH="`dirname $0`/git.xpm"
+
+target=`zenity --entry --title="Git: Merge" --text="Enter branch to merge:" --width=400 --window-icon="$ICONPATH" 2>&1`
+
+if [ $? -eq 0 ] ; then
+    git merge $target &> $LOGFILE
+    zenity --text-info --title="Git: Merge" --filename=$LOGFILE --width=600 --height=400 --window-icon="$ICONPATH"
+    rm -f $LOGFILE
+fi

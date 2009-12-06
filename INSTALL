@@ -1,0 +1,8 @@
+INSTALL
+=======
+
+Just copy the Git folder into either ~/.gnome2/nautilus-scripts,
+~/.gnome/nautilus-scripts, ~/Nautilus/scripts or ~/.nautilus/scripts,
+depending on the versions of GNOME and Nautilus you have.
+
+The scripts are using zenity for user interaction.
