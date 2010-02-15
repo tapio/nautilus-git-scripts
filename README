@@ -1,7 +1,7 @@
 README
 ======
 
-Nautilus Git Scripts v0.1
+Nautilus Git Scripts v0.2
 
 This is a collection of shell scripts designed for use with Nautilus that allow
 for point-and-click manipulation of a Git repository.
