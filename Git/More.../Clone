@@ -6,7 +6,7 @@
 # http://gnomefiles.org/app.php?soft_id=1059
 
 LOGFILE=`mktemp -t git_clone.XXXXXX`
-ICONPATH="`dirname $0`/git.xpm"
+ICONPATH="`dirname $0`/git.png"
 
 URL=`zenity --entry --title="Git: Clone" --text="Enter repository URL:" --entry-text="git://" --width=400 --window-icon="$ICONPATH" 2>&1`
 

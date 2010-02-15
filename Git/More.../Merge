@@ -6,7 +6,7 @@
 # http://gnomefiles.org/app.php?soft_id=1059
 
 LOGFILE=`mktemp -t git_merge.XXXXXX`
-ICONPATH="`dirname $0`/git.xpm"
+ICONPATH="`dirname $0`/git.png"
 
 target=`zenity --entry --title="Git: Merge" --text="Enter branch to merge:" --width=400 --window-icon="$ICONPATH" 2>&1`
 

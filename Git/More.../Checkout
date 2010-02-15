@@ -6,7 +6,7 @@
 # http://gnomefiles.org/app.php?soft_id=1059
 
 LOGFILE=`mktemp -t git_checkout.XXXXXX`
-ICONPATH="`dirname $0`/git.xpm"
+ICONPATH="`dirname $0`/git.png"
 
 target=`zenity --entry --title="Git: Checkout" --text="Enter object to checkout" --width=400 --window-icon="$ICONPATH" 2>&1`
 

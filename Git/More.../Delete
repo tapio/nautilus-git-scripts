@@ -8,5 +8,5 @@
 LOGFILE=`mktemp -t git_delete.XXXXXX`
 
 git rm "$@" > $LOGFILE
-zenity --text-info --title="Git: Delete" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.xpm"
+zenity --text-info --title="Git: Delete" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.png"
 rm -f $LOGFILE

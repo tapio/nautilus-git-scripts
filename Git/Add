@@ -8,5 +8,5 @@
 LOGFILE=`mktemp -t git_add.XXXXXX`
 
 git add "$@" 2>&1 > $LOGFILE
-zenity --text-info --title="Git: Add" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.xpm"
+zenity --text-info --title="Git: Add" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.png"
 rm -f $LOGFILE

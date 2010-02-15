@@ -6,7 +6,7 @@
 # http://gnomefiles.org/app.php?soft_id=1059
 
 LOGFILE=`mktemp -t git_rename.XXXXXX`
-ICONPATH="`dirname $0`/git.xpm"
+ICONPATH="`dirname $0`/git.png"
 
 if [ $# -ne 1 ] ; then
     zenity --warning  --title="Git: Rename" --warning-text="Please select a single file or directory and try again ..." --width=600 --height=400 --window-icon="$ICONPATH"
