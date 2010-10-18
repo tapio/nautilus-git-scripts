@@ -11,7 +11,7 @@ ICONPATH="`dirname $0`/git.png"
 URL=`zenity --entry --title="Git: Clone" --text="Enter repository URL:" --entry-text="git://" --width=400 --window-icon="$ICONPATH" 2>&1`
 
 if [ $? -eq 0 ] ; then
-    git checkout $URL &> $LOGFILE
+    git clone $URL &> $LOGFILE
     zenity --text-info --title="Git: Clone" --filename=$LOGFILE --width=600 --height=400 --window-icon="$ICONPATH"
     rm -f $LOGFILE
 fi
