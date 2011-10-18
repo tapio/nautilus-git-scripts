@@ -15,7 +15,7 @@ OUTPUT="/tmp/`basename "$0"`.$$"
 [ -x "$ZENITY" ] || exit 1
 
 if [ -x "$GIT" ]; then
-  $GIT log "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
+  $GIT rm -r "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
   RETVAL="$?"
   if [ -s "$OUTPUT" ]; then
     $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --height "400" \

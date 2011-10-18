@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# distributed under the terms of GNU GPL version 2
+#
+
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
+fi
+
+NAME="Git : `basename "$0"`"
+OUTPUT="/tmp/`basename "$0"`.$$"
+
+[ -x "$ZENITY" ] || exit 1
+
+if [ -x "$GIT" ]; then
+  if [ "$#" -ne 1 ]; then
+    $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" \
+    --warning --text "Please select a single directory or single file and try again ..."
+  else
+    NAME=$($ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --entry --text "Enter a new name for \"$1\" :")
+    if [ "$?" -eq 0 ]; then
+      $GIT mv "$1" "$NAME" 1>> "$OUTPUT" 2>> "$OUTPUT"
+      RETVAL="$?"
+      if [ -s "$OUTPUT" ]; then
+        $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --height "400" \
+        --text-info --filename "$OUTPUT"
+      else
+        if [ "$RETVAL" -eq 0 ]; then
+          pynotify
+        else
+          $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" \
+          --error --text "unknown error (more information can be found at ~/.xsession-errors)"
+        fi
+      fi
+    fi
+  fi
+else
+  $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" \
+  --error --text "$GIT was NOT found"
+fi
+
+rm --force "$OUTPUT"

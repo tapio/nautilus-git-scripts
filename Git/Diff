@@ -1,12 +1,37 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
-# Distributed under the terms of GNU GPL version 2
+# distributed under the terms of GNU GPL version 2
 #
-# http://marius.scurtescu.com/?p=102
-# http://gnomefiles.org/app.php?soft_id=1059
-    
-LOGFILE=`mktemp -t git_diff.XXXXXX`
 
-git diff "$@"  &> $LOGFILE
-zenity --text-info --title="Git: Diff" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.png"
-rm -f $LOGFILE
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
+fi
+
+NAME="Git : `basename "$0"`"
+OUTPUT="/tmp/`basename "$0"`.$$"
+
+[ -x "$ZENITY" ] || exit 1
+
+if [ -x "$GIT" ]; then
+  $GIT diff "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
+  RETVAL="$?"
+  if [ -s "$OUTPUT" ]; then
+    $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --height "400" \
+    --text-info --filename "$OUTPUT"
+  else
+    if [ "$RETVAL" -eq 0 ]; then
+      pynotify
+    else
+      $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" \
+      --error --text "unknown error (more information can be found at ~/.xsession-errors)"
+    fi
+  fi
+else
+  $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" \
+  --error --text "$GIT was NOT found"
+fi
+
+
+rm --force "$OUTPUT"
