@@ -1,24 +1,23 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 zenity --list \
-	--title="Nautilus Scripts Environment Variables" \
-	--width=800 --height=600 \
-	--column="Name" --column="Value" \
-	"NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" \
-	"NAUTILUS_SCRIPT_SELECTED_URIS" "$NAUTILUS_SCRIPT_SELECTED_URIS" \
-	"NAUTILUS_SCRIPT_CURRENT_URI" "$NAUTILUS_SCRIPT_CURRENT_URI" \
-	"NAUTILUS_SCRIPT_WINDOW_GEOMETRY" "$NAUTILUS_SCRIPT_WINDOW_GEOMETRY" \
-	"pwd" "`pwd`" \
-	"\$\$" "$$" \
-	"\$0" "$0" \
-	"\$1" "$1" \
-	"\$_" "$_" \
-	"\$#" "$#" \
-	"\$*" "$*"
+  --title="Nautilus Scripts Environment Variables" \
+  --width=800 --height=600 \
+  --column="Name" --column="Value" \
+  "NAUTILUS_SCRIPT_CURRENT_URI" "$NAUTILUS_SCRIPT_CURRENT_URI" \
+  "NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" \
+  "NAUTILUS_SCRIPT_SELECTED_URIS" "$NAUTILUS_SCRIPT_SELECTED_URIS" \
+  "NAUTILUS_SCRIPT_WINDOW_GEOMETRY" "$NAUTILUS_SCRIPT_WINDOW_GEOMETRY" \
+  "pwd" "`pwd`" \
+  "\$\$" "$$" \
+  "\$0" "$0" \
+  "\$1" "$1" \
+  "\$_" "$_" \
+  "\$#" "$#" \
+  "\$*" "$*"
 
 zenity --list \
-	--title="Nautilus Scripts \$@ Variable" \
-	--width=600 --height=400 \
-	--column="\$@" \
-	"$@"
-
+  --title="Nautilus Scripts \$@ Variable" \
+  --width=600 --height=400 \
+  --column="\$@" \
+  "$@"

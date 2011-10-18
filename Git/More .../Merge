@@ -15,9 +15,9 @@ OUTPUT="/tmp/`basename "$0"`.$$"
 [ -x "$ZENITY" ] || exit 1
 
 if [ -x "$GIT" ]; then
-  COMMIT=$($ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --entry --text "Enter commit message :")
+  BRANCH=$($ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --entry --text "Enter branch name :")
   if [ "$?" -eq 0 ]; then
-    $GIT commit -a -m "$COMMIT" 1>> "$OUTPUT" 2>> "$OUTPUT"
+    $GIT merge "$BRANCH" 1>> "$OUTPUT" 2>> "$OUTPUT"
     RETVAL="$?"
     if [ -s "$OUTPUT" ]; then
       $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --height "400" \

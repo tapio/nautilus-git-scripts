@@ -15,8 +15,13 @@ OUTPUT="/tmp/`basename "$0"`.$$"
 [ -x "$ZENITY" ] || exit 1
 
 if [ -x "$GIT" ]; then
-  $GIT log "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
-  RETVAL="$?"
+  if [ -z $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS ]; then
+    $GIT revert . 1>> "$OUTPUT" 2>> "$OUTPUT"
+    RETVAL="$?"
+  else
+    $GIT revert "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
+    RETVAL="$?"
+  fi
   if [ -s "$OUTPUT" ]; then
     $ZENITY --name "$NAME" --title "$NAME" --window-icon "$ICON" --width "600" --height "400" \
     --text-info --filename "$OUTPUT"
