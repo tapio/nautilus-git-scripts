@@ -38,5 +38,4 @@ else
   --error --text "$GIT was NOT found"
 fi
 
-
 rm --force "$OUTPUT"

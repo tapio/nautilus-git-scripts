@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -d "~/.gnome2/nautilus-scripts" ]; then
-  cp --archive "Git" "~/.gnome2/nautilus-scripts"
+if [ -d "$HOME/.gnome2/nautilus-scripts" ]; then
+  cp --archive "Git" "$HOME/.gnome2/nautilus-scripts"
 else
-  echo "~/.gnome2/nautilus-scripts directory was NOT found" && exit 1
+  echo "$HOME/.gnome2/nautilus-scripts directory was NOT found" && exit 1
 fi
