@@ -11,6 +11,6 @@ else
   exit 1
 fi
 
-$GIT $GIT_OPTS pull "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
+$GIT $GIT_OPTS remote -v 1>> "$OUTPUT" 2>> "$OUTPUT"
 _zenity_info "$?" "Unknown" "Unknown error (more information can be found at ~/.xsession-errors)"
 

@@ -2,16 +2,18 @@
 #
 # Distributed under the terms of GNU GPL version 2
 #
-# http://marius.scurtescu.com/?p=102
-# http://gnomefiles.org/app.php?soft_id=1059
 
-LOGFILE=`mktemp -t git_reset.XXXXXX`
-ICONPATH="`dirname $0`/git.png"
-
-target=`zenity --entry --title="Git: Reset" --text="Enter object to reset" --width=400 --window-icon="$ICONPATH" 2>&1`
-
-if [ $? -eq 0 ] ; then
-    git reset $target &> $LOGFILE
-    zenity --text-info --title="Git: Reset" --filename=$LOGFILE --width=600 --height=400 --window-icon="$ICONPATH"
-    rm -f $LOGFILE
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
+else
+  exit 1
 fi
+
+OBJECT_NAME=$(_zenity_entry_text "Enter object to reset :")
+if [ "$?" -eq 0 ]; then
+  $GIT $GIT_OPTS reset "$OBJECT_NAME" 1>> "$OUTPUT" 2>> "$OUTPUT"
+  _zenity_info "$?" "Unknown" "Unknown error (more information can be found at ~/.xsession-errors)"
+fi
+
