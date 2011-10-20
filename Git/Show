@@ -11,9 +11,10 @@ else
   exit 1
 fi
 
-BRANCH_NAME=$(_zenity_entry_text "Enter branch to merge :")
-if [ "$?" -eq 0 ]; then
-  $GIT $GIT_OPTS merge "$BRANCH_NAME" 1>> "$OUTPUT" 2>> "$OUTPUT"
+if [ -d "$@" ]; then
+  $GIT $GIT_OPTS show "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
   _zenity_info "$?" "Unknown" "Unknown error (more information can be found at ~/.xsession-errors)"
+else
+  _zenity_error_text "Please select a single directory and try again ..."
 fi
 
