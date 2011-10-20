@@ -2,11 +2,15 @@
 #
 # Distributed under the terms of GNU GPL version 2
 #
-# http://marius.scurtescu.com/?p=102
-# http://gnomefiles.org/app.php?soft_id=1059
 
-LOGFILE=`mktemp -t git_add.XXXXXX`
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
+else
+  exit 1
+fi
 
-git add "$@" 2>&1 > $LOGFILE
-zenity --text-info --title="Git: Add" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.png"
-rm -f $LOGFILE
+$GIT $GIT_OPTS add "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
+_zenity_info "$?" "$* successfully added" "Unknown error (more information can be found at ~/.xsession-errors)"
+

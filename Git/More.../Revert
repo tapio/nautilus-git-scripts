@@ -2,16 +2,20 @@
 #
 # Distributed under the terms of GNU GPL version 2
 #
-# http://marius.scurtescu.com/?p=102
-# http://gnomefiles.org/app.php?soft_id=1059
 
-LOGFILE=`mktemp -t git_revert.XXXXXX`
-
-if [ -z $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS ] ; then
-    git revert . > $LOGFILE
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
 else
-    git revert "$@" > $LOGFILE
+  exit 1
 fi
 
-zenity --text-info --title="Git: Revert" --filename=$LOGFILE --width=600 --height=400 --window-icon="`dirname $0`/git.png"
-rm -f $LOGFILE
+if [ -z "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
+  $GIT $GIT_OPTS revert . 1>> "$OUTPUT" 2>> "$OUTPUT"
+  _zenity_info "$?" "Unknown" "Unknown error (more information can be found at ~/.xsession-errors)"
+else
+  $GIT $GIT_OPTS revert "$@" 1>> "$OUTPUT" 2>> "$OUTPUT"
+  _zenity_info "$?" "Unknown" "Unknown error (more information can be found at ~/.xsession-errors)"
+fi
+

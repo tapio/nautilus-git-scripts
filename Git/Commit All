@@ -2,16 +2,18 @@
 #
 # Distributed under the terms of GNU GPL version 2
 #
-# http://marius.scurtescu.com/?p=102
-# http://gnomefiles.org/app.php?soft_id=1059
 
-LOGFILE=`mktemp -t git_commit.XXXXXX`
-
-ICONPATH="`dirname $0`/git.png"
-LOGMESSAGE=`zenity --entry --title="Git: Commit" --text="Enter log message:" --width=400 --window-icon="$ICONPATH" 2>&1`
-
-if [ $? -eq 0 ] ; then
-    git commit -a -m "$LOGMESSAGE" "$@" > $LOGFILE
-    zenity --text-info --title="Git: Commit" --filename=$LOGFILE --width=600 --height=400 --window-icon="$ICONPATH"
-    rm -f $LOGFILE
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
+else
+  exit 1
 fi
+
+MESSAGE=$(_zenity_entry_text "Enter log message :")
+if [ "$?" -eq 0 ]; then
+  $GIT $GIT_OPTS commit -a -m "$MESSAGE" 1>> "$OUTPUT" 2>> "$OUTPUT"
+  _zenity_info "$?" "Successfully commited" "Unknown error (more information can be found at ~/.xsession-errors)"
+fi
+

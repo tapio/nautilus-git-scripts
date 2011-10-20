@@ -2,21 +2,22 @@
 #
 # Distributed under the terms of GNU GPL version 2
 #
-# http://marius.scurtescu.com/?p=102
-# http://gnomefiles.org/app.php?soft_id=1059
 
-LOGFILE=`mktemp -t git_rename.XXXXXX`
-ICONPATH="`dirname $0`/git.png"
-
-if [ $# -ne 1 ] ; then
-    zenity --warning  --title="Git: Rename" --warning-text="Please select a single file or directory and try again ..." --width=600 --height=400 --window-icon="$ICONPATH"
-	exit -1
-fi 
-
-NEWNAME=`zenity --entry --title="Git: Rename" --text="Enter a new name for '$1':" --entry-text="$1" --width=400 --window-icon="$ICONPATH" 2>&1`
-
-if [ $? -eq 0 ] ; then
-    git mv $1 $NEWNAME &> $LOGFILE
-    zenity --text-info --title="Git: Rename" --filename=$LOGFILE --width=600 --height=400 --window-icon="$ICONPATH"
-    rm -f $LOGFILE
+if [ -r "`dirname "$0"`/git.conf" ]; then
+  . "`dirname "$0"`/git.conf"
+elif [ -r "`dirname "$0"`/../git.conf" ]; then
+  . "`dirname "$0"`/../git.conf"
+else
+  exit 1
 fi
+
+if [ "$#" -eq 1 ]; then
+  OBJECT_NEW_NAME=$(_zenity_entry_text "Enter a new name for '$1' :")
+  if [ "$?" -eq 0 ]; then
+    $GIT $GIT_OPTS mv "$1" "$OBJECT_NEW_NAME" 1>> "$OUTPUT" 2>> "$OUTPUT"
+    _zenity_info "$?" "$1 successfully renamed" "Unknown error (more information can be found at ~/.xsession-errors)"
+  fi
+else
+  _zenity_error_text "Please select a single directory or file and try again ..."
+fi
+
