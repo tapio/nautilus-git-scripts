@@ -9,6 +9,6 @@ mkdir -p $HOME/.local/share/nautilus/scripts
 if [ -d "$HOME/.local/share/nautilus/scripts" ]; then
   cp -a Git "$HOME/.local/share/nautilus/scripts"
 else
-  echo "Error installing scripts to $HOME/.local/share/nautilus/"
+  echo "Error installing scripts to $HOME/.local/share/nautilus/scripts"
   exit 1
 fi
