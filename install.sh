@@ -1,11 +1,14 @@
 #!/bin/sh
 # Script name: install.sh
 # Description: Install nautilus-git-scripts
-# Version:     0.2
+# Version:     0.3
 
-if [ -d "$HOME/.gnome2/nautilus-scripts" ]; then
-  cp -a Git "$HOME/.gnome2/nautilus-scripts"
+# Gives no error if directory already exists
+mkdir -p $HOME/.local/share/nautilus/scripts
+
+if [ -d "$HOME/.local/share/nautilus/scripts" ]; then
+  cp -a Git "$HOME/.local/share/nautilus/scripts"
 else
-  echo "$HOME/.gnome2/nautilus-scripts directory was NOT found"
+  echo "Error installing scripts to $HOME/.local/share/nautilus/scripts"
   exit 1
 fi
